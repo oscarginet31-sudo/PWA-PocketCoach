@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Sécurité : Content Security Policy (Strict mais autorisant les sources utilisées) -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' https://wger.de; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: https://wger.de;">
+    <title>PocketCoach</title>
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="./favicon/favicon-96x96.png">
+    <link rel="icon" type="image/svg+xml" href="./favicon/favicon.svg">
+    <link rel="shortcut icon" href="./favicon/favicon.ico">
+    <link rel="manifest" href="./favicon/site.webmanifest">
+    <meta name="theme-color" content="#0d6efd">
+
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="./css/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="./css/style.css">
+
+    <script defer src="./js/pwa.js"></script>
+    <script defer src="./js/chrono.js"></script>
+    <script defer src="./js/api.js?v=3.0"></script>
+    <!-- Bootstrap Bundle JS -->
+    <script defer src="./js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body class="bg-light">
+
+    <!-- Navbar (remplace mdl-layout header) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4 sticky-top">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">PocketCoach</span>
+            <div class="ms-auto">
+                <button id="bouton-installation" class="btn btn-outline-light" disabled>
+                    <i class="bi bi-download"></i> Installer
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="contenu-page">
+
+            <div class="row g-4">
+
+                <!-- Colonne de Gauche : Chrono + Recherche -->
+                <div class="col-12 col-md-4">
+
+                    <!-- Carte Chrono -->
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header bg-primary text-white fond-degrade">
+                            <h2 class="h5 mb-0">Séance Libre</h2>
+                        </div>
+
+                        <div class="card-body text-center">
+                            <h1 id="affichage-chrono" class="display-1 fw-bold text-dark my-3">00:00</h1>
+
+                            <div class="controles-chrono d-flex justify-content-center align-items-end gap-2">
+                                <div class="form-floating groupe-saisie">
+                                    <input type="number" class="form-control text-center" id="entree-minutes" min="0"
+                                        max="59" value="1" placeholder="Min" inputmode="numeric" pattern="[0-9]*">
+                                    <label for="entree-minutes">Min</label>
+                                </div>
+                                <span class="separateur-temps h2 mb-3">:</span>
+                                <div class="form-floating groupe-saisie">
+                                    <input type="number" class="form-control text-center" id="entree-secondes" min="0"
+                                        max="59" value="30" placeholder="Sec" inputmode="numeric" pattern="[0-9]*">
+                                    <label for="entree-secondes">Sec</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer bg-transparent border-top-0 text-center pb-3">
+                            <button id="bouton-demarrer" class="btn btn-primary btn-lg w-100 mb-2">
+                                Démarrer
+                            </button>
+                            <button id="bouton-reinitialiser" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-clockwise"></i> Réinitialiser
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Carte Bibliothèque -->
+                    <div class="card shadow-sm" style="min-height: 400px;">
+                        <div class="card-header">
+                            <h2 class="h5 mb-0">Bibliothèque</h2>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="input-group mb-3">
+                                <div class="form-floating flex-grow-1">
+                                    <input type="text" class="form-control" id="barre-recherche"
+                                        placeholder="Chercher...">
+                                    <label for="barre-recherche">Chercher (ex: Bench)...</label>
+                                </div>
+                                <button id="bouton-recherche" class="btn btn-primary" type="button">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+
+                            <ul id="liste-resultats" class="list-group list-group-flush">
+                                <li class="list-group-item d-flex align-items-center">
+                                    <i class="bi bi-info-circle me-3 fs-4"></i>
+                                    <span>Fais une recherche pour commencer.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Colonne de Droite : Ma Séance -->
+                <div class="col-12 col-md-8">
+                    <div class="card shadow-sm h-100" style="min-height: 600px;">
+                        <div class="card-header bg-primary text-white fond-degrade">
+                            <h2 class="h5 mb-0">Ma Séance</h2>
+                        </div>
+                        <div class="card-body">
+                            <ul id="liste-seance" class="list-group list-group-flush">
+                                <!-- Les exercices s'ajouteront ici -->
+                                <li class="list-group-item">
+                                    Aucun exercice ajouté pour le moment.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bouton mise à jour (Toasts ou Alert) -->
+            <div class="conteneur-mise-a-jour text-center mt-4">
+                <button id="bouton-mise-a-jour" class="btn btn-warning text-dark" style="display: none;">
+                    Mise à jour disponible !
+                </button>
+                <p id="version-app" class="mt-2 text-muted small"></p>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+
+</html>

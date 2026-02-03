@@ -1,0 +1,93 @@
+body {
+    background-color: #f5f5f5;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.contenu-page {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    /* Gestion de la largeur via Bootstrap container */
+}
+
+/* Dégradés personnalisés */
+.fond-degrade {
+    background: linear-gradient(45deg, #0d6efd, #0dcaf0);
+    /* Bleu vers Cyan */
+    color: white !important;
+}
+
+/* Affichage du Chronomètre */
+#affichage-chrono {
+    font-family: 'Courier New', Courier, monospace;
+    /* Monospace pour stabilité des chiffres */
+    letter-spacing: -2px;
+}
+
+.groupe-saisie {
+    width: 80px;
+    /* Largeur adaptée pour form-floating */
+}
+
+.separateur-temps {
+    color: #555;
+    line-height: 1;
+    padding-bottom: 0;
+    /* Bootstrap align-items-end gère l'alignement */
+    align-self: center;
+}
+
+/* Liste des exercices */
+.contenu-seance-titre {
+    word-break: break-word;
+    /* Évite les débordements */
+    margin-right: 10px;
+}
+
+
+.champ-saisie-seance {
+    width: 70px;
+    /* Largeur fixe pour les inputs en liste */
+}
+
+/* Ajustement des labels flottants pour petits inputs */
+.champ-saisie-seance .form-control {
+    padding: 0.5rem 0.5rem;
+    /* Padding compact */
+    height: calc(3rem + 2px);
+    text-align: center;
+}
+
+.champ-saisie-seance label {
+    padding: 0.5rem;
+    /* Ajustement position label */
+    font-size: 0.8rem;
+}
+
+/* Adaptations Mobile */
+@media (max-width: 576px) {
+    .groupe-saisie {
+        width: 70px;
+    }
+
+    #affichage-chrono {
+        font-size: 3.5rem;
+        /* Plus petit sur mobile */
+    }
+
+    /* Empilement du contenu sur très petits écrans */
+    .element-seance {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+
+    .champs-saisie-seance {
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+    .contenu-seance-titre {
+        width: 100%;
+        /* Titre pleine largeur */
+    }
+}
